@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AquaForge Frontend
 
 This is the frontend-only package for the AquaForge application. It contains all the Flutter code needed to run the web and mobile interfaces.
@@ -70,3 +71,7 @@ flutter build web --release
 - This is a frontend-only package. The backend API needs to be running separately.
 - The mock services will be used if the API connection fails.
 - For full functionality, make sure the backend API is properly configured and accessible.
+=======
+# aquaforge_application_frontend
+web application
+>>>>>>> 13cd857361c710aeab0b88b0e2ef5a40200e0ce2
