@@ -1,0 +1,34 @@
+name: aquaforge_frontend
+description: "Frontend for AquaForge Application"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  fl_chart: ^0.68.0   # For charting
+  http: ^1.2.1        # For making HTTP requests
+  intl: ^0.18.0 # or the latest version
+  google_maps_flutter: ^2.6.0
+  provider: ^6.1.2
+  flutter_colorpicker: ^1.0.3
+  flutter_secure_storage: ^9.0.0  # For secure storage of tokens
+  amplify_flutter: ^1.6.1
+  amplify_auth_cognito: ^1.6.1 # For Cognito authentication
+  crypto: ^3.0.6
+  # amplify_datastore: ^1.6.1 # Uncomment if using DataStore
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/logo.png
