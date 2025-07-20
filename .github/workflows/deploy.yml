@@ -1,0 +1,37 @@
+# GitHub Actions workflow to deploy Flutter web app to GitHub Pages
+# Save this file as .github/workflows/deploy.yml in your repository
+
+name: Deploy Flutter Web to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: ./aquaforge_application_frontend
+
+      - name: Build web
+        run: flutter build web --release
+        working-directory: ./aquaforge_application_frontend
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./aquaforge_application_frontend/build/web
+          publish_branch: gh-pages
+          force_orphan: true
