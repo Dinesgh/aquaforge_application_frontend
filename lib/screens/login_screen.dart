@@ -1,6 +1,7 @@
 // screens/login_screen.dart
 import 'package:flutter/material.dart';
 import '../services/backend_auth_client.dart';
+import '../services/auth_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -58,19 +59,24 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       final username = _usernameController.text.trim();
       final password = _passwordController.text.trim();
-      
-      // Check for dev mode credentials - use these when no backend is running
+
+      // Always allow demo login regardless of backend status
       if (username == 'demo@aquaforge.com' && password == 'demo123') {
-        // Mock successful login for development purposes
         await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
         debugPrint('DEV MODE: Logged in with demo account');
-        
+        // Save demo user to secure storage so dashboard recognizes it
+  // Save demo user to secure storage so dashboard recognizes it
+  // Save demo user to secure storage so dashboard recognizes it
+  await AuthHelper().saveUsername(username);
         if (mounted) {
           Navigator.pushReplacementNamed(context, '/dashboard');
         }
+        setState(() {
+          _isLoading = false;
+        });
         return;
       }
-      
+
       // Normal authentication flow with backend
       await _authClient.login(username: username, password: password);
       if (mounted) {

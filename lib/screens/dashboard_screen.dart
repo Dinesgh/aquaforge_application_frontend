@@ -41,17 +41,22 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   }
   
   Future<void> _checkAuthAndLoadData() async {
-    // Check if user is authenticated
+    // Check if user is authenticated or demo
     await AuthHelper.ensureAuthenticated(context);
-    
+
     // If we're still here (not redirected), load data
     _fetchData();
-    
+
     // Get user data to personalize the experience
     final authHelper = AuthHelper();
-    final userData = await authHelper.getUserData();
-    if (userData != null) {
-      debugPrint('Dashboard loaded for user: ${userData['username']}');
+    final isDemo = await authHelper.isDemoUser();
+    if (isDemo) {
+      debugPrint('Dashboard loaded for demo user');
+    } else {
+      final userData = await authHelper.getUserData();
+      if (userData != null) {
+        debugPrint('Dashboard loaded for user: ${userData['username']}');
+      }
     }
   }
 

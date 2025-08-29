@@ -5,6 +5,15 @@ import 'dart:convert';
 /// Auth Helper class to centralize authentication-related functionality
 /// This allows us to share token handling between Amplify SDK and Direct API approaches
 class AuthHelper {
+  /// Save username to secure storage (for demo login)
+  Future<void> saveUsername(String username) async {
+    await _secureStorage.write(key: 'username', value: username);
+  }
+  /// Check if demo user is logged in (for frontend-only mode)
+  Future<bool> isDemoUser() async {
+    final username = await _secureStorage.read(key: 'username');
+    return username == 'demo@aquaforge.com';
+  }
   static final AuthHelper _instance = AuthHelper._internal();
   factory AuthHelper() => _instance;
   AuthHelper._internal();
@@ -71,9 +80,9 @@ class AuthHelper {
   static Future<void> ensureAuthenticated(BuildContext context) async {
     final authHelper = AuthHelper();
     final isAuthenticated = await authHelper.isAuthenticated();
-    
-    if (!isAuthenticated && context.mounted) {
-      // Redirect to login screen if not authenticated
+    final isDemo = await authHelper.isDemoUser();
+    if (!isAuthenticated && !isDemo && context.mounted) {
+      // Redirect to login screen if not authenticated and not demo
       Navigator.pushReplacementNamed(context, '/login');
     }
   }
